@@ -1,0 +1,15 @@
+Funcion encontrar_combinaciones(conjunto, n, M, indice, suma_actual, combinacion)
+    Si suma_actual == M:
+        Imprimir combinacion (es una solución)
+        Retornar
+    
+    Si indice >= n o suma_actual > M:
+        Retornar
+    
+    // Opción 1: Incluir conjunto[indice]
+    agregar conjunto[indice] a la combinacion
+    encontrar_combinaciones(conjunto, n, M, indice+1, suma_actual + conjunto[indice], combinacion)
+    
+    // Opción 2: No incluir conjunto[indice]
+    quitar conjunto[indice] de la combinacion
+    encontrar_combinaciones(conjunto, n, M, indice+1, suma_actual, combinacion)
