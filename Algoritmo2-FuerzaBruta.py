@@ -16,7 +16,7 @@ start_time = timeit.timeit()
 solucion=fuerza_bruta(lista,M)
 end_time = timeit.timeit()
 
-print(solucion,round(start_time-end_time,8))
+print(solucion,(start_time-end_time,8))
 
 
 

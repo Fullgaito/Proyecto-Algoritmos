@@ -1,4 +1,6 @@
-#Algoritmo 5: por Backtracking
+import time
+
+# Algoritmo 5: por Backtracking
 def encontrar_combinaciones(arr, M, index=0, suma_actual=0, combinacion=[]):
     if suma_actual == M:
         print(combinacion)  # Se encontró una combinación
@@ -16,4 +18,10 @@ def encontrar_combinaciones(arr, M, index=0, suma_actual=0, combinacion=[]):
 # Ejemplo de uso
 conjunto = [1, 3, 5, 6, 7]
 M = 15
+
+# Medir el tiempo de ejecución
+inicio = time.time()
 encontrar_combinaciones(conjunto, M)
+fin = time.time()
+
+print(f"Tiempo de ejecución: {fin - inicio} segundos")
