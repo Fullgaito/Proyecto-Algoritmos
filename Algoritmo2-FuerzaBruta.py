@@ -9,8 +9,8 @@ def fuerza_bruta(nums, M):
                 result.append(combo)
     return result
 
-lista=[1,3,5,6,7]
-M=15
+lista=[2,4,8,6,10]
+M=10
 
 start_time = timeit.timeit()
 solucion=fuerza_bruta(lista,M)
