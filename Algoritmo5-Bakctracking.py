@@ -1,4 +1,4 @@
-#Algoritmo 1: por divide y venceras
+#Algoritmo 5: por Backtracking
 def encontrar_combinaciones(arr, M, index=0, suma_actual=0, combinacion=[]):
     if suma_actual == M:
         print(combinacion)  # Se encontró una combinación
