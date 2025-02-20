@@ -1,8 +1,10 @@
 # Proyecto-Algoritmos
-Algoritmos a realizar
+<h2>Algoritmos a realizar</h2>
 
-1.divide y venceras
-2.Programacion dinamica
-3.Algoritmos voraces
-4.Fuerza bruta
-5.Backtracking
+<ol>
+    <li>Divide y venceras</li>
+    <li>Fuerza Bruta</li>
+    <li>Programacion dinamica</li>
+    <li>Algoritmos voraces</li>
+    <li>Backtracking</li>
+</ol>
