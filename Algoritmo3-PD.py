@@ -2,8 +2,9 @@
 #Complejidad espacial O(n*m)
 #n es el tamaño del arreglo y m es la suma objetivo
 
-import timeit
+import time
 
+time_start = time.perf_counter()
 def ProgramacionDP(n, m):
     # dp[i] almacenará todas las combinaciones que suman i
     dp = [[] for _ in range(m + 1)]
@@ -21,9 +22,9 @@ def ProgramacionDP(n, m):
 n = [2,4,8,6,10]
 m = 10
 
-start_time = timeit.timeit()
+
 result = ProgramacionDP(n, m)
-end_time = timeit.timeit()
+time_elapsed = (time.perf_counter() - time_start)
 
 print(f"Programacion Dinamica - Combinaciones: {result}")
-print(f"Tiempo de ejecucion: {end_time - start_time}")
+print(f"Tiempo de ejecucion: {time_elapsed}")
