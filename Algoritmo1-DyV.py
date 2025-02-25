@@ -1,56 +1,48 @@
+#complejidad temporal O(2^n)
+#complejidad espacial O(2^n)
+
 import time
+time_start = time.perf_counter()
+def subsetSum(arr, index, current_subset, comb_list, sum_list):
+    """Genera todas las combinaciones posibles de subconjuntos y sus sumas."""
+    if index == len(arr):
+        comb_list.append(current_subset[:])  # Copia del subconjunto actual
+        sum_list.append(sum(current_subset))
+        return
 
-#Algoritmo #1: Divide y vencerás
-def find_combinations_divide_and_conquer(nums, target):
-    def find_combinations(subset, target):
-        if not subset:
-            return []
-        if target == 0:
-            return [[]]  # Una combinación vacía representa una suma válida
-        
-        if len(subset) == 1:
-            return [[subset[0]]] if subset[0] == target else []
+    # Incluir el elemento actual
+    current_subset.append(arr[index])
+    subsetSum(arr, index + 1, current_subset, comb_list, sum_list)
 
-        # Dividir el conjunto en dos mitades
-        mid = len(subset) // 2
-        left, right = subset[:mid], subset[mid:]
+    # Excluir el elemento actual
+    current_subset.pop()
+    subsetSum(arr, index + 1, current_subset, comb_list, sum_list)
 
-        # Resolver para cada mitad
-        left_combinations = find_combinations(left, target)
-        right_combinations = find_combinations(right, target)
+def calcSubsets(n, arr, x):
+    """Divide el array en dos partes, genera los subconjuntos y busca combinaciones cuya suma sea x."""
+    arr1, arr2 = arr[:n // 2], arr[n // 2:]
 
-        # Combinar soluciones
-        combined_combinations = []
-        
-        # Generar combinaciones que incluyan elementos de ambas mitades
-        for i in range(target + 1):
-            left_part = find_combinations(left, i)
-            right_part = find_combinations(right, target - i)
+    # Obtener subconjuntos y sumas para cada mitad
+    comb1, sums1 = [], []
+    subsetSum(arr1, 0, [], comb1, sums1)
 
-            for l in left_part:
-                for r in right_part:
-                    combined_combinations.append(l + r)
+    comb2, sums2 = [], []
+    subsetSum(arr2, 0, [], comb2, sums2)
 
-        # También incluir soluciones parciales que ya sumen el target
-        combined_combinations.extend(left_combinations)
-        combined_combinations.extend(right_combinations)
+    # Buscar combinaciones cuya suma sea x
+    for i in range(len(sums1)):
+        for j in range(len(sums2)):
+            if sums1[i] + sums2[j] == x:
+                print(comb1[i] + comb2[j])
 
-        return combined_combinations
+# Prueba del algoritmo
 
-    result = find_combinations(nums, target)
+arr = [2,4,8,6,10]
+x = 10
+n=len(arr)
+calcSubsets(n, arr, x)
 
-    # Eliminar duplicados y ordenar los resultados
-    unique_results = {tuple(sorted(comb)) for comb in result if comb}
-    return [list(comb) for comb in unique_results]
 
-# Ejemplo de uso
-nums = [1, 3, 5, 6, 7]
-M = 15
-start = time.time()
-combinations = find_combinations_divide_and_conquer(nums, M)
-end = time.time()
+time_elapsed = (time.perf_counter() - time_start)
 
-print("Combinaciones que suman", M, ":")
-for combo in combinations:
-    print(combo)
-print("Tiempo de ejecución:", end - start, "segundos")
+print(time_elapsed)

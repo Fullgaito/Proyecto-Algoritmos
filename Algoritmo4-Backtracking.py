@@ -1,3 +1,6 @@
+#complejidad temporal O(2^n)
+#complejidad espacial O(2^n)
+
 import time
 
 # Algoritmo 5: por Backtracking
@@ -16,8 +19,8 @@ def encontrar_combinaciones(arr, M, index=0, suma_actual=0, combinacion=[]):
     encontrar_combinaciones(arr, M, index + 1, suma_actual, combinacion)
 
 # Ejemplo de uso
-conjunto = [1, 3, 5, 6, 7]
-M = 15
+conjunto = [2,4,8,6,10]
+M = 10
 
 # Medir el tiempo de ejecución
 inicio = time.time()

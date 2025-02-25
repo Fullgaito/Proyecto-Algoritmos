@@ -1,24 +1,28 @@
+#Complejidad temporal O(n*m)
+#Complejidad espacial O(n*m)
+#n es el tamaño del arreglo y m es la suma objetivo
+
 import timeit
 
-def ProgramacionDP(nums, M):
+def ProgramacionDP(n, m):
     # dp[i] almacenará todas las combinaciones que suman i
-    dp = [[] for _ in range(M + 1)]
+    dp = [[] for _ in range(m + 1)]
     dp[0] = [[]]  # Caso base: suma 0 tiene una combinación vacía
 
     # Iterar sobre cada número en el conjunto
-    for num in nums:
-        for j in range(M, num - 1, -1):
+    for num in n:
+        for j in range(m, num - 1, -1):
             for prev in dp[j - num]:
                 dp[j].append(prev + [num])
 
-    return dp[M]
+    return dp[m]
 
 # Prueba
-nums = [2,4,8,6,10]
-M = 10
+n = [2,4,8,6,10]
+m = 10
 
 start_time = timeit.timeit()
-result = ProgramacionDP(nums, M)
+result = ProgramacionDP(n, m)
 end_time = timeit.timeit()
 
 print(f"Programacion Dinamica - Combinaciones: {result}")
