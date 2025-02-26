@@ -2,90 +2,80 @@ import time
 import random
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.optimize import curve_fit
 from scipy.stats import linregress
 
-def subsetSumDP(arr, target):
-    """Encuentra subconjuntos cuya suma sea igual a 'target' usando Programación Dinámica."""
-    dp = [[] for _ in range(target + 1)]
-    dp[0] = [[]]  # La suma 0 tiene una combinación vacía
+# 🔹 Algoritmo de Programación Dinámica
+def ProgramacionDP(n, m):
+    """Encuentra todas las combinaciones de n que suman m usando programación dinámica."""
+    dp = [[] for _ in range(m + 1)]
+    dp[0] = [[]]  # Caso base: suma 0 tiene una combinación vacía
 
-    for num in arr:
-        for j in range(target, num - 1, -1):  
+    for num in n:
+        for j in range(m, num - 1, -1):
             for prev in dp[j - num]:
                 dp[j].append(prev + [num])
 
-    return len(dp[target]) > 0  # Retorna True si hay combinaciones para la suma 'target'
+    return dp[m]
 
 # 🔹 Prueba de rendimiento
 def test_performance():
-    sizes = list(range(2, 30, 2))  # Tamaños de listas de prueba (de 2 a 30 en pasos de 2)
+    """Mide el tiempo de ejecución para diferentes tamaños de `n` y valores `m`."""
+    sizes = list(range(2, 30, 2))  # Tamaños de prueba (de 2 a 30 en pasos de 2)
     times = []
 
     for size in sizes:
-        arr = [random.randint(1, 20) for _ in range(size)]
-        x = random.randint(5, 40)
+        total_time = 0
+        num_trials = 10  # Más mediciones para mayor precisión
 
-        start_time = time.perf_counter()
-        subsetSumDP(arr, x)
-        elapsed_time = time.perf_counter() - start_time
+        for _ in range(num_trials):
+            n = [random.randint(1, 20) for _ in range(size)]
+            m = random.randint(5, 40)
 
-        times.append(elapsed_time)
+            start_time = time.perf_counter()
+            ProgramacionDP(n, m)
+            elapsed_time = time.perf_counter() - start_time
+            total_time += elapsed_time
+
+        avg_time = (total_time / num_trials) * 1e6  # Convertimos a microsegundos
+        times.append(avg_time)
 
     return np.array(sizes), np.array(times)
 
-# 🔹 Definimos funciones de ajuste
-def linear_model(x, a, b):
-    return a * x + b
-
-def exponential_model(x, a, b):
-    return a * np.exp(b * x)
-
-def polynomial_model(x, a, b, c):
-    return a * x**2 + b * x + c
-
-# 🔹 Graficar y encontrar mejor ajuste
-def graph_and_fit():
+# 🔹 Graficar los resultados y calcular correlación
+def graph_results():
+    """
+    Genera la gráfica de dispersión con la correlación correcta.
+    """
     sizes, times = test_performance()
 
-    # Ajuste Lineal
-    popt_linear, _ = curve_fit(linear_model, sizes, times)
-    r_linear = linregress(sizes, times).rvalue**2  
+    # 📌 Aplicar logaritmo a los tiempos para mejorar la regresión
+    log_times = np.log10(times)  # Transformamos a escala logarítmica base 10
 
-    # Ajuste Exponencial
-    try:
-        popt_exp, _ = curve_fit(exponential_model, sizes, times, maxfev=5000)
-        times_pred_exp = exponential_model(sizes, *popt_exp)
-        r_exp = np.corrcoef(times, times_pred_exp)[0, 1]**2
-    except RuntimeError:
-        r_exp = 0  
+    # 📌 Calcular coeficiente de correlación con `scipy.stats.linregress`
+    slope, intercept, r_value, _, _ = linregress(sizes, log_times)
+    r2 = r_value**2  # R² de la regresión logarítmica
 
-    # Ajuste Polinómico de 2do grado
-    popt_poly, _ = curve_fit(polynomial_model, sizes, times)
-    times_pred_poly = polynomial_model(sizes, *popt_poly)
-    r_poly = np.corrcoef(times, times_pred_poly)[0, 1]**2
+    plt.figure(figsize=(8, 6))
 
-    # 📊 Graficamos los puntos originales
-    plt.figure(figsize=(10, 6))
+    # 📊 Gráfica: Tiempo vs Tamaño del Conjunto con escala logarítmica
     plt.scatter(sizes, times, color="red", label="Datos Originales")
 
-    # 📈 Graficamos cada ajuste
-    plt.plot(sizes, linear_model(sizes, *popt_linear), label=f"Ajuste Lineal (R²={r_linear:.4f})", linestyle="--")
-    plt.plot(sizes, polynomial_model(sizes, *popt_poly), label=f"Ajuste Polinómico (R²={r_poly:.4f})", linestyle="--")
-    if r_exp > 0:
-        plt.plot(sizes, exponential_model(sizes, *popt_exp), label=f"Ajuste Exponencial (R²={r_exp:.4f})", linestyle="--")
+    # 📌 Graficamos la regresión pero revirtiendo la transformación logarítmica
+    regression_line = 10**(intercept + slope * sizes)  # Volvemos a la escala original
+    plt.plot(sizes, regression_line, color="blue", linestyle="--", label=f"Regresión (R² = {r2:.4f})")
 
-    plt.xlabel("Tamaño del Array")
-    plt.ylabel("Tiempo de Ejecución (segundos)")
-    plt.title("Ajuste de Función a la Complejidad del Algoritmo (DP)")
+    plt.xlabel("Tamaño del Conjunto (n)")
+    plt.ylabel("Tiempo de Ejecución (μs)")
+    plt.yscale("log")  # Escala logarítmica para una mejor visualización
+    plt.title("Tiempo vs Tamaño del Conjunto (Escala Logarítmica en Y)")
     plt.legend()
-    plt.grid(True)
+    plt.grid(True, which="both", linestyle="--", linewidth=0.5)
+
     plt.show()
 
-    # 🔹 Determinar cuál ajuste es mejor
-    best_fit = max([("Lineal", r_linear), ("Exponencial", r_exp), ("Polinómico", r_poly)], key=lambda x: x[1])
-    print(f"🔹 Mejor ajuste: {best_fit[0]} con R² = {best_fit[1]:.4f}")
+    # 🔹 Mostrar correlación en consola
+    print(f"🔹 Correlación Tiempo vs Tamaño del Conjunto: R² = {r2:.4f}")
 
 # 🔹 Ejecutar la prueba y graficar
 if __name__ == "__main__":
-    graph_and_fit()
+    graph_results()
