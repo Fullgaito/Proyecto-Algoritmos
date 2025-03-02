@@ -20,7 +20,7 @@ def ProgramacionDP(n, m):
 # 🔹 Prueba de rendimiento
 def test_performance():
     """Mide el tiempo de ejecución para diferentes tamaños de `n` y valores `m`."""
-    sizes = list(range(2, 30, 2))  # Tamaños de prueba (de 2 a 30 en pasos de 2)
+    sizes = list(range(2, 100, 2))  # Tamaños de prueba (de 2 a 30 en pasos de 2)
     times = []
 
     for size in sizes:
@@ -67,7 +67,7 @@ def graph_results():
     plt.xlabel("Tamaño del Conjunto (n)")
     plt.ylabel("Tiempo de Ejecución (μs)")
     plt.yscale("log")  # Escala logarítmica para una mejor visualización
-    plt.title("Tiempo vs Tamaño del Conjunto (Escala Logarítmica en Y)")
+    plt.title("Tiempo vs Tamaño del Conjunto (Programación Dinámica)")
     plt.legend()
     plt.grid(True, which="both", linestyle="--", linewidth=0.5)
 
