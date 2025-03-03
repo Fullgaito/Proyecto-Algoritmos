@@ -79,10 +79,10 @@ Este script medirá el tiempo de ejecución y el consumo de memoria de cada algo
 
 Los algoritmos han sido probados en los siguientes entornos:
 
-- **Sistema Operativo:** Ubuntu 22.04, Windows 10, macOS Monterey
-- **Python:** 3.10.6
-- **Procesador:** Intel i7 / AMD Ryzen 7
-- **RAM:** 16GB
+- **Sistema Operativo:** Windows 11
+- **Python:** Python 3.11.5
+- **Procesador:** Intel i5
+- **RAM:** 8GB
 
 ## Contacto
 
