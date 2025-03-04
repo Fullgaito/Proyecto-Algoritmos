@@ -1,15 +1,48 @@
-Funcion encontrar_combinaciones(conjunto, n, M, indice, suma_actual, combinacion)
-    Si suma_actual == M:
-        Imprimir combinacion (es una solución)
-        Retornar
-    
-    Si indice >= n o suma_actual > M:
-        Retornar
-    
-    // Opción 1: Incluir conjunto[indice]
-    agregar conjunto[indice] a la combinacion
-    encontrar_combinaciones(conjunto, n, M, indice+1, suma_actual + conjunto[indice], combinacion)
-    
-    // Opción 2: No incluir conjunto[indice]
-    quitar conjunto[indice] de la combinacion
-    encontrar_combinaciones(conjunto, n, M, indice+1, suma_actual, combinacion)
+INICIAR temporizador
+
+FUNCIÓN subsetSum(arr, index, current_subset, comb_list, sum_list)
+    SI index ES IGUAL A longitud(arr) ENTONCES
+        AÑADIR copia(current_subset) A comb_list
+        AÑADIR suma(current_subset) A sum_list
+        RETORNAR
+    FIN SI
+
+    // Incluir el elemento actual
+    AÑADIR arr[index] A current_subset
+    LLAMAR subsetSum(arr, index + 1, current_subset, comb_list, sum_list)
+
+    // Excluir el elemento actual
+    ELIMINAR último elemento DE current_subset
+    LLAMAR subsetSum(arr, index + 1, current_subset, comb_list, sum_list)
+FIN FUNCIÓN
+
+FUNCIÓN calcSubsets(n, arr, x)
+    DIVIDIR arr EN arr1 Y arr2 EN DOS PARTES IGUALES
+
+    // Obtener subconjuntos y sumas para cada mitad
+    INICIALIZAR comb1 COMO lista vacía
+    INICIALIZAR sums1 COMO lista vacía
+    LLAMAR subsetSum(arr1, 0, lista vacía, comb1, sums1)
+
+    INICIALIZAR comb2 COMO lista vacía
+    INICIALIZAR sums2 COMO lista vacía
+    LLAMAR subsetSum(arr2, 0, lista vacía, comb2, sums2)
+
+    // Buscar combinaciones cuya suma sea x
+    PARA i DESDE 0 HASTA longitud(sums1) - 1 HACER
+        PARA j DESDE 0 HASTA longitud(sums2) - 1 HACER
+            SI sums1[i] + sums2[j] ES IGUAL A x ENTONCES
+                IMPRIMIR comb1[i] + comb2[j]
+            FIN SI
+        FIN PARA
+    FIN PARA
+FIN FUNCIÓN
+
+// Prueba del algoritmo
+DEFINIR arr COMO [2, 4, 8, 6, 10]
+DEFINIR x COMO 10
+DEFINIR n COMO longitud(arr)
+LLAMAR calcSubsets(n, arr, x)
+
+DETENER temporizador
+IMPRIMIR tiempo transcurrido
