@@ -4,10 +4,11 @@
 
 void encontrar_combinaciones(int *arr, int n, int M, int index, int suma_actual, int *combinacion, int combinacion_len)
 {
+    int i;
     if (suma_actual == M)
     {
         printf("[");
-        for (int i = 0; i < combinacion_len; i++)
+        for (i = 0; i < combinacion_len; i++)
         {
             printf("%d%s", combinacion[i], (i < combinacion_len - 1) ? ", " : "");
         }

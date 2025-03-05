@@ -5,12 +5,15 @@
 void generateSubsets(int *arr, int n, int x)
 {
     int totalSubsets = 1 << n; // 2^n subconjuntos
-    for (int i = 0; i < totalSubsets; i++)
+    int i, j;
+    
+    for (i = 0; i < totalSubsets; i++)
     {
         int sum = 0;
-        printf("[");
         int first = 1;
-        for (int j = 0; j < n; j++)
+        printf("[");
+        
+        for (j = 0; j < n; j++)
         {
             if (i & (1 << j)) // Verifica si el j-ésimo bit está activado
             {
@@ -21,6 +24,7 @@ void generateSubsets(int *arr, int n, int x)
                 first = 0;
             }
         }
+        
         printf("]");
         if (sum == x)
             printf(" <- Suma %d encontrada", x);
@@ -30,7 +34,8 @@ void generateSubsets(int *arr, int n, int x)
 
 int main()
 {
-    clock_t start = clock();
+    clock_t start, end;
+    start = clock();
 
     int arr[] = {2, 4, 8, 6, 10};
     int x = 10;
@@ -38,7 +43,7 @@ int main()
 
     generateSubsets(arr, n, x);
 
-    clock_t end = clock();
+    end = clock();
     printf("Tiempo transcurrido: %lf segundos\n", (double)(end - start) / CLOCKS_PER_SEC);
 
     return 0;

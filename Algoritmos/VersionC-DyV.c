@@ -6,7 +6,7 @@ void subsetSum(int *arr, int index, int *currentSubset, int currentSize, int **c
 {
     if (index == currentSize)
     {
-    	int i = 0;
+        int i;
         combList[*combCount] = (int *)malloc(currentSize * sizeof(int));
         for (i = 0; i < currentSize; i++)
         {
@@ -32,9 +32,7 @@ void subsetSum(int *arr, int index, int *currentSubset, int currentSize, int **c
 
 void calcSubsets(int n, int *arr, int x)
 {
-	int i = 0;
-	int j = 0;
-	int k = 0;
+    int i, j, k;
     int mid = n / 2;
     int *arr1 = arr;
     int *arr2 = arr + mid;
@@ -45,6 +43,7 @@ void calcSubsets(int n, int *arr, int x)
     int *sums1 = (int *)malloc((1 << size1) * sizeof(int));
     int count1 = 0;
     int *tempSubset = (int *)malloc(size1 * sizeof(int));
+    
     subsetSum(arr1, 0, tempSubset, 0, comb1, combSizes1, sums1, &count1);
     free(tempSubset);
 
@@ -53,26 +52,31 @@ void calcSubsets(int n, int *arr, int x)
     int *sums2 = (int *)malloc((1 << size2) * sizeof(int));
     int count2 = 0;
     tempSubset = (int *)malloc(size2 * sizeof(int));
+    
     subsetSum(arr2, 0, tempSubset, 0, comb2, combSizes2, sums2, &count2);
     free(tempSubset);
 
     for (i = 0; i < count1; i++)
     {
+        int sum1 = sums1[i];
+        int size1 = combSizes1[i];
         for (j = 0; j < count2; j++)
         {
-            if (sums1[i] + sums2[j] == x)
+            int sum2 = sums2[j];
+            int size2 = combSizes2[j];
+            if (sum1 + sum2 == x)
             {
                 printf("[");
-                for (k = 0; k < combSizes1[i]; k++)
+                for (k = 0; k < size1; k++)
                 {
                     printf("%d", comb1[i][k]);
-                    if (k < combSizes1[i] - 1) printf(", ");
+                    if (k < size1 - 1) printf(", ");
                 }
-                if (combSizes1[i] > 0 && combSizes2[j] > 0) printf(", ");
-                for (k = 0; k < combSizes2[j]; k++)
+                if (size1 > 0 && size2 > 0) printf(", ");
+                for (k = 0; k < size2; k++)
                 {
                     printf("%d", comb2[j][k]);
-                    if (k < combSizes2[j] - 1) printf(", ");
+                    if (k < size2 - 1) printf(", ");
                 }
                 printf("]\n");
             }
