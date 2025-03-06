@@ -37,7 +37,11 @@ def calcSubsets(n, arr, x):
 
 # Prueba del algoritmo
 
+<<<<<<< HEAD
 arr = [93, 7, 15, 1, 35, 5, 21, 47, 3, 55, 17, 9, 75, 29, 13, 43, 19, 31, 23, 11]
+=======
+arr = [93,7,15,1,35,5,21,47,3,55,17,9,75,29,13,43,19,31,23,11]
+>>>>>>> c07709e3c63773c2ceced072eaabffd9a410b90d
 x = 100
 n=len(arr)
 calcSubsets(n, arr, x)

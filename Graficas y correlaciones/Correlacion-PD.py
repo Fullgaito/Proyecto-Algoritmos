@@ -1,5 +1,6 @@
 import time
 import random
+import json
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import linregress
@@ -20,8 +21,9 @@ def ProgramacionDP(n, m):
 # 🔹 Prueba de rendimiento
 def test_performance():
     """Mide el tiempo de ejecución para diferentes tamaños de `n` y valores `m`."""
-    sizes = list(range(2, 100, 2))  # Tamaños de prueba (de 2 a 30 en pasos de 2)
+    sizes = list(range(2, 20, 2))  
     times = []
+    data = []
 
     for size in sizes:
         total_time = 0
@@ -32,12 +34,26 @@ def test_performance():
             m = random.randint(5, 40)
 
             start_time = time.perf_counter()
-            ProgramacionDP(n, m)
+            soluciones = ProgramacionDP(n, m)
             elapsed_time = time.perf_counter() - start_time
             total_time += elapsed_time
 
+            # Guardar datos en formato JSON
+            caso = {
+                "tamaño": size,
+                "array": n,
+                "suma_objetivo": m,
+                "soluciones": soluciones,
+                "tiempo_ejecucion": elapsed_time * 1e6  # Convertir a microsegundos
+            }
+            data.append(caso)
+
         avg_time = (total_time / num_trials) * 1e6  # Convertimos a microsegundos
         times.append(avg_time)
+
+    # Guardar datos en un archivo JSON
+    with open("datos_PD.json", "w") as f:
+        json.dump(data, f, indent=4)
 
     return np.array(sizes), np.array(times)
 

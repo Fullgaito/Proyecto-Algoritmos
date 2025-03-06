@@ -22,6 +22,10 @@ def subsetSum(n, arr, x):
     print("[" + "]")
 
 # Driver Code:
+<<<<<<< HEAD
+=======
+
+>>>>>>> c07709e3c63773c2ceced072eaabffd9a410b90d
 arr = [93, 7, 15, 1, 35, 5, 21, 47, 3, 55, 17, 9, 75, 29, 13, 43, 19, 31, 23, 11]
 x = 100
 n=len(arr)
