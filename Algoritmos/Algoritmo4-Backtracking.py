@@ -19,8 +19,8 @@ def encontrar_combinaciones(arr, M, index=0, suma_actual=0, combinacion=[]):
     encontrar_combinaciones(arr, M, index + 1, suma_actual, combinacion)
 
 # Ejemplo de uso
-conjunto = [2,4,8,6,10]
-M = 10
+conjunto = [93, 7, 15, 1, 35, 5, 21, 47, 3, 55, 17, 9, 75, 29, 13, 43, 19, 31, 23, 11]
+M = 100
 
 # Medir el tiempo de ejecución
 inicio = time.time()
