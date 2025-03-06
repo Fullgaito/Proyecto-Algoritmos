@@ -19,8 +19,8 @@ def ProgramacionDP(n, m):
     return dp[m]
 
 # Prueba
-n = [2,4,8,6,10]
-m = 10
+n = [93, 7, 15, 1, 35, 5, 21, 47, 3, 55, 17, 9, 75, 29, 13, 43, 19, 31, 23, 11]
+m = 100
 
 
 result = ProgramacionDP(n, m)

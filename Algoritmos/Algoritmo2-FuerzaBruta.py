@@ -23,8 +23,8 @@ def subsetSum(n, arr, x):
 
 # Driver Code:
 
-arr = [2,4,8,6,10]
-x = 10
+arr = [93, 7, 15, 1, 35, 5, 21, 47, 3, 55, 17, 9, 75, 29, 13, 43, 19, 31, 23, 11]
+x = 100
 n=len(arr)
 subsetSum(n, arr, x)
 time_elapsed = (time.perf_counter() - time_start)
